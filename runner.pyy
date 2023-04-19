@@ -1,7 +1,6 @@
 import os
 import subprocess
 import sys
-
 def error(msg):
     print(msg)
     sys.exit(1)
@@ -19,8 +18,8 @@ for file, cases in tests.items():
     print(os.getcwd())
     cwd = os.getcwd().lower()
 
-    # if cwd != "c:\\users\\ctyblue\\desktop\\python\\exam":
-    #     error("CWD is not exam directory")
+    if cwd != "c:\\users\\ctyblue\\desktop\\python\\exam":
+        error("CWD is not exam directory")
 
     if os.path.exists("stdin.txt"):
         os.remove("stdin.txt")
@@ -39,5 +38,4 @@ for file, cases in tests.items():
     else:
         print("Test case failed")
 
-print("-" * 50)
-print(number_correct)
+    print(number_correct)
