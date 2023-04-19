@@ -1,9 +1,8 @@
 import os
 import sys
-from samutil.formatting import Formatter as fmt
 
 def error(msg):
-    print(fmt.error(msg))
+    print(msg)
     sys.exit(1)
 
 tests = {
