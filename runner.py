@@ -33,7 +33,7 @@ for file, cases in tests.items():
     for _, answer in cases:
         output += f"{answer}\n"
 
-    res = subprocess.run(["python", file, "<", "stdin.txt"])
+    res = subprocess.run(["python", f"{cwd}\\{file}", "<", "stdin.txt"])
     if res.stdout == output:
         number_correct += 1
     else:
