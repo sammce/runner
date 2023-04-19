@@ -26,8 +26,11 @@ for file, cases in tests.items():
         os.remove("stdin.txt")
 
     with open("stdin.txt", "a") as f:
+        current_cases = []
         for test, _ in cases:
-            f.write(test + "\n")
+            current_cases.append(test)
+
+        f.write("\n".join(current_cases))
 
     output = ""
     for _, answer in cases:
