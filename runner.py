@@ -1,10 +1,17 @@
 import os
-import subprocess
+from subprocess import Popen, PIPE
 import sys
+import platform
 
 def error(msg):
     print(msg)
     sys.exit(1)
+
+def red_text(msg):
+    print(f"\033[91m{msg}\033[0m")
+
+def green_text(msg):
+    print(f"\033[92m{msg}\033[0m")
 
 tests = {
     "most-recent-leap-year.py": [("2022", "2020"), ("2016", "2016"), ("2015", "2012"), ("2014", "2012")],
@@ -13,23 +20,27 @@ tests = {
     "treble.py": [("10", "30"), ("5", "15"), ("2", "6")]
 }
 
+is_windows = platform.system() == "Windows"
+py_command = "python" if is_windows else "python3"
+separator = "\\" if is_windows else "/"
+
 number_correct = 0
+print()
 
 for file, cases in tests.items():
-    print(os.getcwd())
     cwd = os.getcwd().lower()
 
-    output = ""
     for case, answer in cases:
-        with open("stdin.txt", "w") as f:
-            f.write(case + "\n")
+        res = Popen([py_command, f"{cwd}{separator}{file}"], stdout=PIPE, stdin=PIPE, stderr=PIPE)
+        out, err = res.communicate(input=case.encode("utf-8"))
+        out = out.decode("utf-8").strip()
 
-        res = subprocess.run(["python", f"{cwd}\\{file}", "<", "stdin.txt"])
-        if res.stdout != output:
-            print("CASE FAILED")
+        if out != answer:
+            red_text(file)
             break
     else:
+        green_text(file)
         number_correct += 1
 
 print("-" * 50)
-print(number_correct)
+print("Correct:", number_correct)
