@@ -27,7 +27,7 @@ for file, cases in tests.items():
 
     with open("stdin.txt", "a") as f:
         for test, _ in cases:
-            f.write(test)
+            f.write(test + "\n")
 
     output = ""
     for _, answer in cases:
