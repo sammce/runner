@@ -19,28 +19,17 @@ for file, cases in tests.items():
     print(os.getcwd())
     cwd = os.getcwd().lower()
 
-    # if cwd != "c:\\users\\ctyblue\\desktop\\python\\exam":
-    #     error("CWD is not exam directory")
-
-    if os.path.exists("stdin.txt"):
-        os.remove("stdin.txt")
-
-    with open("stdin.txt", "a") as f:
-        current_cases = []
-        for test, _ in cases:
-            current_cases.append(test)
-
-        f.write("\n".join(current_cases))
-
     output = ""
-    for _, answer in cases:
-        output += f"{answer}\n"
+    for case, answer in cases:
+        with open("stdin.txt", "w") as f:
+            f.write(case + "\n")
 
-    res = subprocess.run(["python", f"{cwd}\\{file}", "<", "stdin.txt"])
-    if res.stdout == output:
-        number_correct += 1
+        res = subprocess.run(["python", f"{cwd}\\{file}", "<", "stdin.txt"])
+        if res.stdout != output:
+            print("CASE FAILED")
+            break
     else:
-        print("Test case failed")
+        number_correct += 1
 
 print("-" * 50)
 print(number_correct)
