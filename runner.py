@@ -22,7 +22,7 @@ for file, cases in tests.items():
         error("CWD is not exam directory")
 
     if os.path.exists("stdin.txt"):
-        subprocess.run(["del"])
+        subprocess.run(["del", "stdin.txt"])
 
     with open("stdin.txt", "a") as f:
         for test, _ in cases:
